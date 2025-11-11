@@ -1,0 +1,75 @@
+(function ($) {
+    $(document).ready(function () {
+        "use strict";
+
+        $('.spl-close-popup').on('click', function () {
+            $('.spl-popup-warning').hide();
+        });
+
+        $('.js-demo-link-click').on('click', function () {
+            var demo_url = $(this).closest('.demo-item').attr('data-url');
+            $('.js-spl-popup-click .spl-btn-view-now').attr('href',demo_url);
+            $('.js-spl-popup-click').show();
+        });
+
+        // smooths croll
+        function smooth_scroll() {
+            $(function () {
+                // This will select everything with the class smoothScroll
+                // This should prevent problems with carousel, scrollspy, etc...
+                $('a[href*="#"]:not([href="#"]):not([href*="#mm-"]):not([href="#primary-navigation"])').not('a[data-toggle="tab"]').on('click', function () {
+                    if (location.pathname.replace(/^\//, '') == this.pathname.replace(/^\//, '') && location.hostname == this.hostname) {
+                        var target = $(this.hash);
+                        target = target.length ? target : $('[name=' + this.hash.slice(1) + ']');
+                        if (target.length) {
+                            $('html,body').stop().animate({
+                                scrollTop: target.offset().top
+                            }, 1000); // The number here represents the speed of the scroll in milliseconds
+                            return false;
+                        }
+                    }
+                });
+            });
+        }
+
+        function tab_product_fade_effect() {
+            // effect click
+            $(document).on('click', '.ecome-tabs a[data-toggle="tab"]', function () {
+                var tab_id = $(this).attr('href');
+                var tab_animated = $(this).data('animated');
+                tab_animated = ( tab_animated == undefined || tab_animated == "" ) ? 'fadeInUp' : tab_animated;
+
+                $(tab_id).find('.demo-item').each(function (i) {
+                    var t = $(this);
+                    var style = $(this).attr("style");
+                    style = ( style == undefined ) ? '' : style;
+                    var delay = i * 50;
+                    t.attr("style", style +
+                        ";-webkit-animation-delay:" + delay + "ms;"
+                        + "-moz-animation-delay:" + delay + "ms;"
+                        + "-o-animation-delay:" + delay + "ms;"
+                        + "animation-delay:" + delay + "ms;"
+                    ).addClass(tab_animated + ' animated').one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function () {
+                        t.removeClass(tab_animated + ' animated');
+                        t.attr("style", style);
+                    });
+                })
+            })
+        }
+
+        $(window).on('scroll', function () {
+            if ($(window).scrollTop() > 200) {
+                $('.main-header').addClass('menu-bg');
+            } else {
+                $('.main-header').removeClass('menu-bg')
+            }
+        });
+        $(window).on("load", function () {
+            smooth_scroll();
+        });
+        // Change the speed to whatever you want
+        // Personally i think 1000 is too much
+        // Try 800 or below, it seems not too much but it will make a difference
+        new WOW().init();
+    })
+}(jQuery));
