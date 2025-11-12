@@ -57,4 +57,4 @@ All project code is available here: [GitHub Repo](https://github.com/darpana-cha
 
 1. Clone the repository:  
 ```bash
-git clone https://github.com/<username>/RoyalHandbag.git
+git clone https://github.com/darpana-chauhan/royal-handbag
